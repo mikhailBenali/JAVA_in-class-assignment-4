@@ -4,16 +4,18 @@ import java.util.stream.Stream;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        ArrayList <Integer> mixedNumbers = new ArrayList<Integer>();
+        ArrayList <Double> mixedNumbers = new ArrayList<Double>();
 
-        mixedNumbers.add(1);
-        mixedNumbers.add(2);
-        mixedNumbers.add(3);
-        mixedNumbers.add(4);
+        mixedNumbers.add(1.0);
+        mixedNumbers.add(2.0);
+        mixedNumbers.add(3.0);
+        mixedNumbers.add(4.0);
+
+        System.out.println("\n##############################Without using Stream##############################");
 
         Collections.sort(mixedNumbers);
 
-        System.out.println("Sorted arrayList :");
+        System.out.println("\nSorted arrayList :");
 
         for (int i = 0; i < mixedNumbers.size(); i++) {
             System.out.println(mixedNumbers.get(i));
@@ -22,31 +24,48 @@ public class App {
         System.out.println("\nSquare root of each number :");
 
         for (int i = 0; i < mixedNumbers.size(); i++) {
-            System.out.println(Math.sqrt(mixedNumbers.get(i)));
+            mixedNumbers.set(i, Math.sqrt(mixedNumbers.get(i)));
+        }
+
+        for (int i = 0; i < mixedNumbers.size(); i++) {
+            System.out.println(mixedNumbers.get(i));
         }
 
         System.out.println("\nEven numbers :");
 
         for (int i = 0; i < mixedNumbers.size(); i++) {
-            if (mixedNumbers.get(i) % 2 == 0) {
-                System.out.println(mixedNumbers.get(i));
+            if (mixedNumbers.get(i) % 2 != 0) {
+                mixedNumbers.remove(i);
+                i--;
             }
         }
 
-        System.out.println("\nUsing Stream :\n");
+        System.out.println("\nOur final Array : ");
+
+        for (int i = 0; i < mixedNumbers.size(); i++) {
+            System.out.println(mixedNumbers.get(i));
+        }
+
+        System.out.println("\n##############################Using Stream##############################");
 
         //Making the same thing using Stream
 
-        System.out.println("Sorted arrayList :");
+        mixedNumbers.removeAll(mixedNumbers);
+        mixedNumbers.add(1.0);
+        mixedNumbers.add(2.0);
+        mixedNumbers.add(3.0);
+        mixedNumbers.add(4.0);
+
+        System.out.println("\nSorted arrayList :");
 
         mixedNumbers.stream().sorted().forEach((n) -> System.out.println(n));
 
         System.out.println("\nSquare root of each number :");
 
-        mixedNumbers.stream().sorted().forEach((n) -> System.out.println(Math.sqrt(n)));
+        mixedNumbers.stream().sorted().map(n->Math.sqrt(n)).forEach((n) -> System.out.println(n));
 
-        System.out.println("\nEven numbers :");
+        System.out.println("\nOur final array :");
 
-        mixedNumbers.stream().filter(n->n%2==0).forEach((n) -> System.out.println(n));
+        mixedNumbers.stream().sorted().map(n->Math.sqrt(n)).filter(n->n%2==0).forEach((n) -> System.out.println(n));
     }
 }
